@@ -1,6 +1,6 @@
-# Offense-Handling AI Agent
+# Simple Offense Handling Agent (SOHA)
 
-A Python-based AI agent that monitors and responds to offensive language in chat messages, promoting a positive and respectful communication environment.
+A Python-based Simple AI agent that monitors and responds to offensive language in chat messages, promoting a positive and respectful communication environment.
 
 ## Features
 - Real-time message monitoring

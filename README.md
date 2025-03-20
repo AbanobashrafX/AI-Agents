@@ -9,7 +9,7 @@ This repository contains AI agents implemented in Python. These agents are desig
 
 ## Projects
 ### Offense-Handling AI Agent
-A Python-based Simple AI agent that monitors chat messages for offensive content and promotes respectful communication. [Learn more](SR%20AI%20Agent/Offense-Handling%20AI%20Agent/README.md)
+A Python-based Simple AI agent that monitors chat messages for offensive content and promotes respectful communication. [Learn more](SR%20AI%20Agent/SOHA/README.md)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
