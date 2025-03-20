@@ -1,3 +1,4 @@
+import pickle
 import random
 from time import time
 
@@ -5,6 +6,7 @@ from time import time
 class OffenseHandlingAgent:
     def __init__(self):
         self.offensive_words = self.generate_offensive_words()
+        self.calming_responses = self.load_responses()
         self.strikes = 0
         self.max_strikes = 3
         self.banned = False
@@ -12,21 +14,18 @@ class OffenseHandlingAgent:
         self.ban_end_time = None
 
     def generate_offensive_words(self):
-        """
-        Generates a list of offensive words based on the dataset.
-        (you can expand this by adding more words to the dataset file)
-        """
-        with open("dataset", "r") as file:
-            offensive_words = [line.strip().lower() for line in file.readlines()]
+        """Loads offensive words from PKL dataset"""
+        try:
+            # Fix the path to use forward slashes and relative path
+            with open("offensive_words.pkl", "rb") as file:
+                return pickle.load(file)
+        except FileNotFoundError:
+            # Fallback to default dataset if PKL file doesn't exist
+            with open("datasets/dataset", "r", encoding="utf-8") as file:
+                return [line.strip().lower() for line in file.readlines()]
 
-        return offensive_words
-
-    def calming_response(self):
-        """
-        Returns a random calming response.
-        """
-        # Predefined calming responses
-        calming_responses = [
+    def load_responses(self):
+        return [
             "Let's keep things positive! 😊",
             "Everyone deserves respect. Let's be kind!",
             "I understand, but let's try to stay calm.",
@@ -42,7 +41,6 @@ class OffenseHandlingAgent:
             "Let's be kind and understanding towards each other.",
             "Be kind or you will be banned.",
         ]
-        return random.choice(calming_responses)
 
     def ban(self, ban_reason):
         """
@@ -61,13 +59,17 @@ class OffenseHandlingAgent:
     def handle_offense(self, message):
         """
         Checks if a message contains offensive words and responds accordingly.
+        Now supports different character sets and word boundaries.
         """
-        words = message.lower().split()
-        if any(word in words for word in self.offensive_words):
-            self.strikes += 1
-            if self.strikes >= self.max_strikes:
-                return self.ban("offensive language")
-            return self.calming_response()
+        message = message.lower()
+        # Handle different word boundaries
+        for word in self.offensive_words:
+            if word in message:
+                self.strikes += 1
+                if self.strikes >= self.max_strikes:
+                    return self.ban(word)
+                else:
+                    return random.choice(self.calming_responses)    
         return "Thank you for keeping the chat positive! 😊"
 
     def run(self):
@@ -83,7 +85,6 @@ class OffenseHandlingAgent:
                 continue
             response = self.handle_offense(message)
             print(f"AI Agent: {response}")
-            print("\n")
 
         print("Exiting the program.")
 
