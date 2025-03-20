@@ -13,17 +13,17 @@ class OffenseHandlingAgent:
         if any(word in words for word in self.offensive_words):
             return self.calming_response()
         return "Thank you for keeping the chat positive! 😊"
-    
+
     def generate_offensive_words(self):
         """
         Generates a list of offensive words based on the dataset.
         (you can expand this by adding more words to the dataset file)
         """
-        with open('dataset', 'r') as file:
+        with open("dataset", "r") as file:
             offensive_words = [line.strip().lower() for line in file.readlines()]
 
         return offensive_words
-    
+
     def calming_response(self):
         """
         Returns a random calming response.
@@ -46,14 +46,14 @@ class OffenseHandlingAgent:
             "Be kind or you will be banned",
         ]
         return random.choice(calming_responses)
-    
+
     def run(self):
         """
         Runs an interactive loop where the user can input messages and the agent responds.
         """
         while True:
             message = input("Enter a message: ")
-            if message.lower() == 'exit':
+            if message.lower() == "exit":
                 break
             response = self.handle_offense(message)
             print(f"AI Agent: {response}")
